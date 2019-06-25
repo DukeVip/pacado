@@ -18,7 +18,7 @@ class BaseHandlers(tornado.web.RequestHandler, SessionMixin):
         self.set_header('Access-Control-Allow-Methods', 'POST, GET')
         self.set_header('Access-Control-Max-Age', 1000)
         self.set_header('Access-Control-Allow-Headers', '*')
-        self.set_header('Content-type', 'application/json')
+        # self.set_header('Content-type', 'application/json')
 
 class IndexHandlers(BaseHandlers):
     def initialize(self):
@@ -27,7 +27,7 @@ class IndexHandlers(BaseHandlers):
 
     # @tornado.web.authenticated
     def get(self):
-        a = 'a'
+
         self.render('index.html')
 
 class Acc(BaseHandlers):
