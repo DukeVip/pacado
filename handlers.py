@@ -1,8 +1,46 @@
 # -*- coding: utf-8 -*-
 __auther__ = '35942'
+import json
+import tornado.web
+from db import DB
 
-from  pacado.utils.handlers import BaseHandlers
-from pacado.utils.tools import authenticate
+from pycket.session import SessionMixin
+
+from tools import authenticate
+# from  tools import  catch
+
+class BaseHandlers(tornado.web.RequestHandler, SessionMixin):
+    def get_current_user(self):
+        return  self.session.get('uid', None)
+
+    def set_default_headers(self):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Access-Control-Allow-Methods', 'POST, GET')
+        self.set_header('Access-Control-Max-Age', 1000)
+        self.set_header('Access-Control-Allow-Headers', '*')
+        self.set_header('Content-type', 'application/json')
+
+class IndexHandlers(BaseHandlers):
+    def initialize(self):
+        pass
+
+
+    # @tornado.web.authenticated
+    def get(self):
+        a = 'a'
+        self.render('index.html')
+
+class Acc(BaseHandlers):
+    def get(self):
+        db = DB.get_cnyb_db('cnyb')
+        data = list(db.predict_data.find({
+            "dtime":{'$gte':'2019-07-01 00:00:00', '$lte':'2019-07-10 00:00:00'} ,
+            'index':7},
+            {'_id':0}))
+        values = {'predict_data':data}
+        self.set_header('Content-type', 'application/json')
+        self.write(json.dumps(values).replace('NaN', 'null'))
+
 
 class RegisterHandler(BaseHandlers):
     def get(self, *args, **kwargs):

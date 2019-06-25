@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 __auther__ = '35942'
+import tornado
 from  tornado.options import options, define
-
+from  urls import handlers
 
 define("port", default=8888, help="run on the given port", type=int) #监听端口
-
-from utils.handlers import  *
-
-handlers = [(r'/', IndexHandlers),
-
-            ]
 
 settings = dict(
     debug=True,  # 调试模式，修改后自动重启服务，不需要自动重启，生产情况下切勿开启，安全性
