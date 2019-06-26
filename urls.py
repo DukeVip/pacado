@@ -7,6 +7,9 @@ from handlers import *
 handlers = [
     (r"/", IndexHandlers),
     (r"/acc", Acc),
+    (r"/generic", Generic),
+    (r"/visitormsg", VisitorMessage),
+    (r"/elements", Elements)
 
 ]
 

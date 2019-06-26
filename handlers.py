@@ -30,6 +30,25 @@ class IndexHandlers(BaseHandlers):
 
         self.render('index.html')
 
+
+class VisitorMessage(BaseHandlers):
+    def post(self, *args, **kwargs):
+        name = self.get_argument('name')
+        email = self.get_argument('email')
+        text = self.get_argument('message')
+        self.redirect('/')
+
+
+class Generic(BaseHandlers):
+    def get(self):
+
+        self.render('generic.html')
+
+class Elements(BaseHandlers):
+    def get(self):
+
+        self.render('elements.html')
+
 class Acc(BaseHandlers):
     def get(self):
         db = DB.get_cnyb_db('cnyb')
